@@ -26,6 +26,7 @@ function paginate(query, options, callback) {
   let leanWithId = options.leanWithId ? options.leanWithId : true;
   let limit = options.limit ? options.limit : 10;
   let page, offset, skip, promises;
+  let maxTimeMS = options.maxTimeMS || 7000
   if (options.offset) {
     offset = options.offset;
     skip = offset;
@@ -43,6 +44,7 @@ function paginate(query, options, callback) {
       .sort(sort)
       .skip(skip)
       .limit(limit)
+      .maxTime(maxTimeMS)
       .lean(lean);
     if (populate) {
       [].concat(populate).forEach((item) => {
