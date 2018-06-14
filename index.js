@@ -24,6 +24,7 @@ function paginate(query, options, callback) {
     var populate   = options.populate;
     var lean       = options.lean || false;
     var leanWithId = options.hasOwnProperty('leanWithId') ? options.leanWithId : true;
+    var maxTimeMS = options.maxTimeMS || 7000
 
     var limit = options.hasOwnProperty('limit') ? options.limit : 10;
     var skip, offset, page;
@@ -47,6 +48,7 @@ function paginate(query, options, callback) {
 
     if (limit) {
         var query = this.find(query)
+                        .maxTime(maxTimeMS)
                         .select(select)
                         .sort(sort)
                         .skip(skip)
